@@ -1,0 +1,9 @@
+=========================
+   FILE ANALYSIS REPORT
+=========================
+
+Count  : 8
+Average: 39.38
+Minimum: 10
+Maximum: 78
+Product: 1572105600000
