@@ -13,6 +13,15 @@ def is_valid_filename(filename):
     
     return None
 
+def error_response(code, message, status_code):
+    return jsonify({
+        "status": "error",
+        "error": {
+            "code": code,
+            "message": message
+        }
+    }), status_code
+
 @app.route("/analyze", methods=["POST"])
 def analyze():
     
@@ -23,38 +32,44 @@ def analyze():
         filename = None
 
     if not filename:
-        return jsonify({
-            "status": "error",
-            "message": "file name is required"
-        }), 400
+        return error_response(
+            "MISSING_FILE_NAME",
+            "filename is required",
+            400
+        )
+
     
     validation_error = is_valid_filename(filename)
 
     if validation_error == "INVALID_EXTENSION":
-        return jsonify({
-            "status": "error",
-            "message": "only .txt files are allowed"
-        }), 400
+        return error_response(
+            "INVALID_EXTENSION",
+            "only .txt files are allowed",
+            400
+        )
     
     if validation_error == "INVALID_PATH":
-        return jsonify({
-            "status": "error",
-            "message": "file should be present in the same directory"
-        }), 400
+        return error_response(
+            "INVALID_PATH",
+            "file should be present in the same directory",
+            400
+        )
     
     output = analyze_file(filename)
 
     if output == "FILE_NOT_FOUND":
-        return jsonify({
-            "status": "error",
-            "message": "file not found"
-        }), 404
+        return error_response(
+            "FILE_NOT_FOUND",
+            "file not found",
+            404
+        )
     
     if output is None:
-        return jsonify({
-            "status": "error",
-            "message": "no valid numbers found"
-        }), 400
+        return error_response(
+            "NO_VALID_NUMBERS",
+            "no valid numbers found",
+            400
+        )
 
     
     return jsonify({
