@@ -1,7 +1,6 @@
-print("APP STARTED")
-
 from flask import Flask, request, jsonify
 from file_analyzer import analyze_file
+from db import db_init, save_report
 
 app = Flask(__name__)
 
@@ -71,6 +70,8 @@ def analyze():
             400
         )
 
+    save_report(filename, output)
+    print(f"\nSaved the Result in a SQL Database report.db\n")
     
     return jsonify({
         "count": output["count"],
@@ -81,4 +82,5 @@ def analyze():
     })
 
 if __name__ == "__main__":
+    db_init()
     app.run(debug=True)
