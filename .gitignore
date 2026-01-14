@@ -4,3 +4,4 @@ data.txt
 report.txt
 report.db
 view_db.py
+.env

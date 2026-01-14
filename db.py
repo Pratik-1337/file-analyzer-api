@@ -1,12 +1,10 @@
 import sqlite3
 from datetime import datetime
 import os
-
-MAIN_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(MAIN_DIR, "report.db")
+from config import Config
 
 def db_init():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(Config.DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -27,7 +25,7 @@ def db_init():
     conn.close()
 
 def save_report(filename, result):
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(Config.DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""

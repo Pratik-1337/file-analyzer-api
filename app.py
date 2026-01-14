@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from file_analyzer import analyze_file
 from db import db_init, save_report
+from config import Config
 
 app = Flask(__name__)
 
@@ -83,4 +84,4 @@ def analyze():
 
 if __name__ == "__main__":
     db_init()
-    app.run(debug=True)
+    app.run(debug=Config.DEBUG)
