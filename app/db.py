@@ -1,6 +1,5 @@
 import sqlite3
 from datetime import datetime
-import os
 from config import Config
 
 def db_init():

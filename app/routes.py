@@ -1,9 +1,8 @@
-from flask import Flask, request, jsonify
-from file_analyzer import analyze_file
-from db import db_init, save_report
-from config import Config
+from flask import Blueprint, request, jsonify
+from app.services import analyze_file
+from app.db import save_report
 
-app = Flask(__name__)
+routes = Blueprint("routes", __name__)
 
 def is_valid_filename(filename):
     if not filename.endswith(".txt"):
@@ -22,7 +21,7 @@ def error_response(code, message, status_code):
         }
     }), status_code
 
-@app.route("/analyze", methods=["POST"])
+@routes.route("/analyze", methods=["POST"])
 def analyze():
     
     data = request.get_json()
@@ -81,7 +80,3 @@ def analyze():
         "maximum": output["max"],
         "product": output["product"]
     })
-
-if __name__ == "__main__":
-    db_init()
-    app.run(debug=Config.DEBUG)

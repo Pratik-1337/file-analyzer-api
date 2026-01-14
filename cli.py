@@ -1,4 +1,4 @@
-from file_analyzer import analyze_file
+from app.services import analyze_file
 import os
 
 os.system('cls' if os.name == 'nt' else 'clear')
